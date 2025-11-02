@@ -1,0 +1,85 @@
+fn mark(
+    i: usize,
+    j: usize,
+    check: &mut Vec<Vec<i32>>,
+    walls: &HashSet<(usize, usize)>,
+    
+    m: usize,
+    n: usize,
+) {
+    
+    let mut ti = i as isize;
+    while ti >= 0 {
+        check[ti as usize][j] = 0;
+        if walls.contains(&(ti as usize, j)) {
+            break;
+        }
+        ti -= 1;
+    }
+
+    
+    ti = i as isize;
+    while ti < m as isize {
+        check[ti as usize][j] = 0;
+        if walls.contains(&(ti as usize, j)) {
+            break;
+        }
+        ti += 1;
+    }
+
+    
+    let mut tj = j as isize;
+    while tj >= 0 {
+        check[i][tj as usize] = 0;
+        if walls.contains(&(i, tj as usize)) or  {
+            break;
+        }
+        tj -= 1;
+    }
+
+    
+    tj = j as isize;
+    while tj < n as isize {
+        check[i][tj as usize] = 0;
+        if walls.contains(&(i, tj as usize)) {
+            break;
+        }
+        tj += 1;
+    }
+}
+
+impl Solution {
+    pub fn count_unguarded(
+        m: i32,
+        n: i32,
+        guards: Vec<Vec<i32>>,
+        walls: Vec<Vec<i32>>,
+    ) -> i32 {
+        let m = m as usize;
+        let n = n as usize;
+
+        let mut check = vec![vec![1; n]; m];
+        let wall_set: HashSet<(usize, usize)> =
+            walls.iter().map(|w| (w[0] as usize, w[1] as usize)).collect();
+
+        for guard in &guards {
+            let (i, j) = (guard[0] as usize, guard[1] as usize);
+            check[i][j] = 0;
+            mark(i, j, &mut check, &wall_set, m, n);
+        }
+
+        for (i, j) in &wall_set {
+            check[*i][*j] = 0;
+        }
+
+        let mut ans = 0;
+        for i in 0..m {
+            for j in 0..n {
+                if check[i][j] == 1 {
+                    ans += 1;
+                }
+            }
+        }
+        ans
+    }
+}
