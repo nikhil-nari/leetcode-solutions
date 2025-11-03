@@ -1,0 +1,29 @@
+impl Solution {
+    pub fn min_cost(colors: String, needed_time: Vec<i32>) -> i32 {
+        let colors = colors.as_bytes();
+        let mut i = 1usize ; 
+        let mut is_same = false ;
+        let mut strt = 0 ;
+        let mut ans = 0 ;
+        let n = colors.len() ;
+        while i < n  {
+            if colors[i] == colors[i-1] {
+                if !is_same {
+                    strt = i-1 ;
+                }
+                is_same= true ;
+            } else {
+                if is_same {
+                    ans += (needed_time[strt..i].iter().sum::<i32>() - *needed_time[strt..i].iter().max().unwrap()) ;
+                    is_same = false;
+                    strt = 0 ;
+                }
+            }
+            i+=1 ;
+        }
+        if is_same {
+            ans += (needed_time[strt..i].iter().sum::<i32>() - *needed_time[strt..i].iter().max().unwrap()) ;
+        }
+        return ans
+    }
+}
