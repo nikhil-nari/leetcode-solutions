@@ -1,0 +1,21 @@
+use::std::collections::HashSet ;
+impl Solution {
+    pub fn find_repeated_dna_sequences(s: String) -> Vec<String> {
+        let mut seen = HashSet::new() ;
+        let mut ans = HashSet::new() ;
+        let n = s.len() ;
+        let mut i = 0 ;
+        let mut j = 10 ;
+        if n < 10 {
+            return Vec::new()
+        }
+        for i in 0..=n-10 {
+            let sub = &s[i..i+10] ;
+            if !seen.insert(sub) {
+                ans.insert(sub.to_string()) ;
+            } 
+
+        } 
+        ans.into_iter().collect()
+    }
+}
