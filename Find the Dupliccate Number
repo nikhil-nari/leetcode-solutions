@@ -1,0 +1,14 @@
+use std::collections::HashSet ;
+impl Solution {
+    pub fn find_duplicate(nums: Vec<i32>) -> i32 {
+        let mut seen = HashSet::new() ;
+        for n in nums {
+            if !seen.insert(n) {
+                return n
+            } else {
+                seen.insert(n) ;
+            }
+        }
+        return -1
+    }
+}
