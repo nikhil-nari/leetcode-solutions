@@ -1,0 +1,49 @@
+impl Solution {
+    pub fn max_diff(num: i32) -> i32 {
+        let s = num.to_string();
+        let chars: Vec<char> = s.chars().collect();
+        let mut largest = chars.clone();
+        let mut smallest = chars.clone();
+
+
+        let mut digit_to_replace = None;
+        for &c in &chars {
+            if c != '9' {
+                digit_to_replace = Some(c);
+                break;
+            }
+        }
+        if let Some(d) = digit_to_replace {
+            for x in largest.iter_mut() {
+                if *x == d {
+                    *x = '9';
+                }
+            }
+        }
+
+
+        if chars[0] != '1' {
+            let d = chars[0];
+            for x in smallest.iter_mut() {
+                if *x == d {
+                    *x = '1';
+                }
+            }
+        } else {
+            for &d in &chars[1..] {
+                if d != '0' && d != '1' {
+                    for x in smallest.iter_mut().skip(1) {
+                        if *x == d {
+                            *x = '0';
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+
+        let max_num: i32 = largest.iter().collect::<String>().parse().unwrap();
+        let min_num: i32 = smallest.iter().collect::<String>().parse().unwrap();
+        max_num - min_num
+    }
+}
