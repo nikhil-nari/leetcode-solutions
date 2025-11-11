@@ -1,0 +1,8 @@
+class Solution:
+    def deleteNode(self, node):
+        while node and node.next :
+            node.val = node.next.val
+           
+            if not node.next.next :
+                node.next = None
+            node = node.next
