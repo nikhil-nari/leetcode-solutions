@@ -1,0 +1,45 @@
+// Definition for singly-linked list.
+// #[derive(PartialEq, Eq, Clone, Debug)]
+// pub struct ListNode {
+//   pub val: i32,
+//   pub next: Option<Box<ListNode>>
+// }
+// 
+// impl ListNode {
+//   #[inline]
+//   fn new(val: i32) -> Self {
+//     ListNode {
+//       next: None,
+//       val
+//     }
+//   }
+// }
+impl Solution {
+    pub fn sort_list(mut head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
+
+        let mut vals = Vec::new();
+        {
+            let mut node_ref = head.as_ref();
+            while let Some(node) = node_ref {
+                vals.push(node.val);
+                node_ref = node.next.as_ref();
+            }
+        }
+
+     
+        vals.sort();
+
+     
+        {
+            let mut node_ref = head.as_mut();
+            let mut i = 0;
+            while let Some(node) = node_ref {
+                node.val = vals[i];
+                i += 1;
+                node_ref = node.next.as_mut();
+            }
+        }
+
+        head
+    }
+}
