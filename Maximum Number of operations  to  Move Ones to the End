@@ -1,0 +1,18 @@
+impl Solution {
+    pub fn max_operations(s: String) -> i32 {
+        let st : Vec<char> = s.chars().collect() ;
+        let mut cnt = 0 ;
+        let mut ans = 0 ;
+        let n = st.len() ;
+        for i in (0..n-1).rev() {
+            if (i < n-1) && (st[i] == '1') && (st[i+1] == '0') {
+                cnt += 1 ;
+            } 
+            if st[i] == '1' {
+                ans += cnt ;
+            }
+        }
+        return ans ;
+    
+    }
+}
