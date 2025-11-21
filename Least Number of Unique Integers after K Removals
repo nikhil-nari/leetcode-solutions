@@ -1,0 +1,21 @@
+use std::collections::HashMap ;
+impl Solution {
+    pub fn find_least_num_of_unique_ints(arr: Vec<i32>, k: i32) -> i32 {
+        let mut count = HashMap::new() ;
+        for &a in &arr {
+            *count.entry(a).or_insert(0)+=1;
+        }
+        let mut freqs : Vec<usize> = count.values().cloned().collect() ;
+        let mut removed = 0 ;
+        freqs.sort() ;
+        let mut k = k ;
+        for f in freqs {
+            if k < f as i32 {
+                break ;
+            }
+            k -= f as i32;
+            removed += 1 ;
+        }
+        return (count.len() - removed) as i32
+    }
+}
